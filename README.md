@@ -8,3 +8,14 @@ Currently is in development stage. Imprimir.co will not responsible by malfuncti
 
 **Limitación de responsabilidad:** Sistema backend para vender productos de litografía online. Todo el código, el logo y la marca "imprimir" son propiedad de Imprimir.co. A menos que esté autorizado no puede usar, descargar o modificar niguna parte de este código.
 Actualmente se encuentra en fase de desarrollo. Imprimir.co no se hará responsable por mal funcionamiento en su sistema si descarga este código ilegalmente.
+
+
+### Instructions / Instrucciones
+
+1. Install dependencies / Instalar dependencias
+
+`npm install`
+
+2. Init server / Iniciar servidor
+
+`node app.js` or / o `npm start`
