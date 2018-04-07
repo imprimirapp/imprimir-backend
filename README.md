@@ -16,15 +16,9 @@ Actualmente se encuentra en fase de desarrollo. Imprimir.co no se hará responsa
 
 `npm install`
 
-2. Create environment variables / Crear variables de entorno [Windows, Linux & Mac](https://www.schrodinger.com/kb/1842):
-
-* `private_key_id`
-* `private_key`
-* `client_email`
-* `client_id`
-* `client_x509_cert_url"`
+2. Ask for .env file to system admin / Pedir archivo .env al administrador del sistema.
 
 
 3. Init server / Inicializar servidor 
 
-`npm start`
+`npm start` or / o `nodemon app.js`

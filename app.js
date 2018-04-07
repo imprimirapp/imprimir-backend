@@ -8,11 +8,17 @@ const bodyParser = require('body-parser');
 const logFmt = require('logfmt');
 const morgan = require('morgan');
 const cons = require('consolidate');
+var routes = require('./routes/index.js');
+const config  = require('./config/config');
 
 //Port / Puerto:
-const server_port = process.env.PORT || 3000;
+const server_port = config.port;
 
-//App / Aplicación:
+const firebaseVars = JSON.stringify(config.firebase);
+
+console.log(firebaseVars);
+
+//App / Aplicación
 const app = express();
 
 //Define static directories / Definir carpetas estáticas a usar:
@@ -21,13 +27,12 @@ app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/bower_components'));
 
 //Define view engine / Definir motor de vistas
-app.get('/', function(req, res) {
-    res.render('index');
-});
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', cons.swig)
 app.set('view engine', 'html');
 
+//Routes / Rutas
+app.use('/', routes);
 
 //Init app / Inicializar la aplicación:
 init();
