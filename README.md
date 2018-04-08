@@ -16,9 +16,13 @@ Actualmente se encuentra en fase de desarrollo. Imprimir.co no se hará responsa
 
 `npm install`
 
-2. Ask for .env file to system admin / Pedir archivo .env al administrador del sistema.
+2. Ask for `accountKey.json` file to system admin. Put it in root folder. / Pedir archivo `accountKey.json` al administrador del sistema. Colocar en directorio raíz.
 
 
 3. Init server / Inicializar servidor 
 
-`npm start` or / o `nodemon app.js`
+`npm start` or / o `nodemon app.js` 
+
+> Note: In order to execute `nodemon app.js` you need have installed Nodemon globally: `npm install -g nodemon`
+
+> Nota: Para ejecutar `nodemon app.js` necesita tener instalado Nodemon globalmente: `npm install -g nodemon`

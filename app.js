@@ -14,10 +14,6 @@ const config  = require('./config/config');
 //Port / Puerto:
 const server_port = config.port;
 
-const firebaseVars = JSON.stringify(config.firebase);
-
-console.log(firebaseVars);
-
 //App / Aplicación
 const app = express();
 
