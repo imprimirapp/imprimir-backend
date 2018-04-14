@@ -6,7 +6,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-db = () =>{
+db = () => {
   return admin.firestore();
 } 
 
