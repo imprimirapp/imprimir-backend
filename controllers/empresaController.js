@@ -2,7 +2,6 @@ const router = require('express').Router();
 const connection = require('../models/connection');
 const db = connection.db();
 
-
 // GETALL
 getAll = (req, res, next) => {
     let empresaRef = db.collection('empresa');
@@ -51,9 +50,9 @@ post = (req, res, next)  => {
         facebook_id: req.body.facebook_id,
         freelance: req.body.freelance,
         google_id: req.body.google_id,
+        user_id: req.body.user_id,
         nombre: req.body.nombre,
         nombre_contacto: req.body.nombre_contacto,
-        password: req.body.password,
         plataforma: req.body.plataforma,
         producto: req.body.producto,
         rut_nit: req.body.rut_nit,
