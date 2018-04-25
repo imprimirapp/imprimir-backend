@@ -18,7 +18,7 @@ getAll = (req, res, next) => {
             res.json(docArray);
         })
         .catch(err => {
-            console.log('Error getting documents', err);
+            console.log('Error getting business / Error obteniendo empresas', err);
         });
     return getAllQuery;    
 }
@@ -34,7 +34,7 @@ getById = (req, res, next) => {
         }
         res.json(obj);
     }, err => {
-        console.log(`Encountered error: ${err}`);
+        console.log(`Encountered error / Error encontrado: ${err}`);
     })
     return getByIdQuery;    
 }
@@ -65,7 +65,7 @@ post = (req, res, next)  => {
         obj = {
             id: doc.id,
             status: 200,
-            message: 'Document created'
+            message: 'Business created / Empresa creada'
         }
         res.status(200).send(obj);
     });
@@ -80,7 +80,7 @@ updateById = (req, res, next) => {
         obj = {
             id: doc.id,
             status: 200,
-            message: 'Document updated'
+            message: 'Business updated / Empresa actualizada'
         }
         res.status(200).send(obj);
     });
@@ -95,7 +95,7 @@ deleteById = (req, res, next) => {
         obj = {
             id: doc.id,
             status: 200,
-            message: 'Document deleted'
+            message: 'Business deleted / Empresa eliminada'
         }
         res.status(200).send(obj);
     });

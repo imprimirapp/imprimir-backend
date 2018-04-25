@@ -19,7 +19,7 @@ router.put("/empresa/updateById",empresaController.updateById);
 router.delete("/empresa/deleteById",empresaController.deleteById);
 
 //User
-router.post("/user/signup", userController.signup);
+router.post("/user/signup", userController.signup); //, userController.verifyEmail (Coming soon)
 router.post("/user/login", userController.login, userController.getUser);
 
 module.exports = router;
