@@ -21,5 +21,7 @@ router.delete("/empresa/deleteById",empresaController.deleteById);
 //User
 router.post("/user/signup", userController.signup); //, userController.verifyEmail (Coming soon)
 router.post("/user/login", userController.login, userController.getUser);
+router.post("/user/logout", userController.logout);
+router.post("/user/getById", userController.getById);
 
 module.exports = router;

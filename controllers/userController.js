@@ -4,7 +4,8 @@ const db = connection.db();
 const auth = connection.auth();
 const crypto = require('crypto');
 const algorithm = 'aes-256-ctr';
-const password = 'imprimir'
+const password = 'imprimir';
+const firebase = require("firebase");
 
 encrypt = (pass) =>{
     let cipher = crypto.createCipher(algorithm,password)
@@ -62,17 +63,20 @@ signup = (req, res, next) => {
 
 login = (req, res, next) => {
     let encryptedPass = encrypt(req.body.password)
-    //AUTH
-    auth.signInWithEmailAndPassword(req.body.email, encryptedPass).then(user =>{
-        console.log('Authorized / Autorizado');   
-        next();
-    })
-    .catch(err => {
-        obj = {
-            status: 400,
-            message: 'User does not exist / El usuario no existe'
-        }
-        res.status(400).send(obj)
+    //Authentication with Session Persistence / Autenticación con Persistencia de Sesión
+    auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() =>{
+        console.log('Persisted / Persistido');  
+        auth.signInWithEmailAndPassword(req.body.email, encryptedPass).then(user =>{
+            console.log('Authorized / Autorizado');   
+            next();
+        })
+        .catch(err => {
+            obj = {
+                status: 400,
+                message: 'User does not exist / El usuario no existe'
+            }
+            res.status(400).send(obj)
+        })  
     })
 }
 
@@ -98,10 +102,35 @@ getUser = (req, res, next) => {
      });
 }
 
+logout = (req, res, next) => {
+    auth.signOut().then(response => {
+        console.log('SignOut succesfully / Sesión cerrada exitosamente');
+    }).catch(err =>{
+        console.log(err);
+    });
+}
+
+getById = (req, res, next) => {
+    let userRef = db.collection('user').doc(req.body.id);
+    let getByIdQuery = userRef
+    .onSnapshot(doc => {
+        obj = {
+            id: doc.id,
+            data: doc.data()
+        }
+        res.json(obj);
+    }, err => {
+        console.log(`Encountered error / Error encontrado: ${err}`);
+    })
+    return getByIdQuery;    
+}
+
 
 module.exports = {
     signup: signup,
     login: login,
-    getUser: getUser
+    getUser: getUser, 
+    logout: logout,
+    getById: getById
     // verifyEmail: verifyEmail (Coming soon)
 }

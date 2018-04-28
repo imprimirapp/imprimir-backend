@@ -41,6 +41,7 @@ getById = (req, res, next) => {
 
 //POST
 post = (req, res, next)  => {
+
     let objEmpresa = {
         ciudad_oficina: req.body.ciudad_oficina,
         departamento_oficina: req.body.departamento_oficina,

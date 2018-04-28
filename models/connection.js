@@ -10,20 +10,21 @@ admin.initializeApp({
 
 firebase.initializeApp(serviceAccount);
 
-//Database
+//Database / Base de datos
 db = () => {
   return admin.firestore();
 }
 
-//Authentication
+//Authentication / Autenticación
 auth = () => {
   return firebase.auth();
 }
 
-//Storage
+//Storage / Almacenamiento
+
 
 
 module.exports = {
   db: db,
-  auth: auth
+  auth: auth,
 }
