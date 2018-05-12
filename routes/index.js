@@ -3,6 +3,7 @@ const router = express.Router();
 //Controllers
 const empresaController = require('../controllers/empresaController');
 const userController = require('../controllers/userController');
+const storageController = require('../controllers/storageController');
 
 //Home 
 router.get('/', function(req, res, next) {
@@ -23,5 +24,8 @@ router.post("/user/signup", userController.signup); //, userController.verifyEma
 router.post("/user/login", userController.login, userController.getUser);
 router.post("/user/logout", userController.logout);
 router.post("/user/getById", userController.getById);
+
+//Storage
+router.get("/storage/getAllFilesFromDesigns", storageController.getAllFilesFromDesigns);
 
 module.exports = router;

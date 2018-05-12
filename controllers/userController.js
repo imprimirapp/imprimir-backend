@@ -2,6 +2,7 @@ const router = require('express').Router();
 const connection = require('../models/connection');
 const db = connection.db();
 const auth = connection.auth();
+const adminAuth = connection.adminAuth();
 const crypto = require('crypto');
 const algorithm = 'aes-256-ctr';
 const password = 'imprimir';
@@ -62,13 +63,13 @@ signup = (req, res, next) => {
 }*/
 
 login = (req, res, next) => {
-    let encryptedPass = encrypt(req.body.password)
+    let encryptedPass = encrypt(req.body.password);
     //Authentication with Session Persistence / Autenticación con Persistencia de Sesión
-    auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() =>{
+    auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => { 
         console.log('Persisted / Persistido');  
-        auth.signInWithEmailAndPassword(req.body.email, encryptedPass).then(user =>{
-            console.log('Authorized / Autorizado');   
-            next();
+        auth.signInWithEmailAndPassword(req.body.email, encryptedPass).then(user => {
+            console.log('Logged / Ingresado');
+            authCustomToken(req, res, next, user.uid);
         })
         .catch(err => {
             obj = {
@@ -78,6 +79,18 @@ login = (req, res, next) => {
             res.status(400).send(obj)
         })  
     })
+}
+
+authCustomToken = (req, res, next, uid) => {
+    //Authentication with Custom Token / Autenticación con Token Personalizado
+    adminAuth.createCustomToken(uid).then(customToken => {
+        auth.signInWithCustomToken(customToken).then(() =>{
+            next();
+            console.log('Auth with Custom Token / Autenticado con Token Personalizado');
+        })
+    }).catch(error =>{
+        console.log('Error authenticating / Error autenticando');
+    });
 }
 
 getUser = (req, res, next) => {

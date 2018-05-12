@@ -5,10 +5,11 @@ const serviceAccount = require('../accountKey.json');
 
 //Services:
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 
 firebase.initializeApp(serviceAccount);
+
 
 //Database / Base de datos
 db = () => {
@@ -20,11 +21,14 @@ auth = () => {
   return firebase.auth();
 }
 
-//Storage / Almacenamiento
-
+//Admin Auth / Autenticación Admin
+adminAuth = () => {
+  return admin.auth();
+}
 
 
 module.exports = {
   db: db,
   auth: auth,
+  adminAuth: adminAuth
 }
