@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const connection = require('../models/connection');
-const db = connection.db();
 const auth = connection.auth();
 const adminAuth = connection.adminAuth();
 const crypto = require('crypto');
@@ -25,10 +24,7 @@ signup = (req, res, next) => {
     }
     //AUTH
     auth.createUserWithEmailAndPassword(req.body.email, encryptedPass).then(user => {   
-        //DB
-        let userRef = db.collection('user')
-        let postQuery = userRef.add(objUser)
-        
+
         obj = {
             status: 200,
             message: 'User created succesfully / Usuario creado exitosamente'
@@ -47,38 +43,27 @@ signup = (req, res, next) => {
 
 }
 
-//VERIFY EMAIL (COMING SOON)
-/*verifyEmail = (req, res, next) => {
-    var actionCodeSettings = {
-        url: 'imprimir-backend.firebaseapp.com' + req.body.email,
-        handleCodeInApp: true
-      };
-    // VERIFY EMAIL
-    auth.currentUser.sendEmailVerification(actionCodeSettings).then(resp => {
-        console.log(resp);
-        console.log('Check Email to verify account / Revisar Email para verificar cuenta');
-    }).catch(function(error) {
-        console.log('Email does not verified / Email no verificado');
-    });
-}*/
 
 login = (req, res, next) => {
     let encryptedPass = encrypt(req.body.password);
-    //Authentication with Session Persistence / Autenticación con Persistencia de Sesión
-    auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => { 
-        console.log('Persisted / Persistido');  
-        auth.signInWithEmailAndPassword(req.body.email, encryptedPass).then(user => {
-            console.log('Logged / Ingresado');
-            authCustomToken(req, res, next, user.uid);
+    auth.signInWithEmailAndPassword(req.body.email, encryptedPass).then(user => {
+        
+        console.log('Logged / Ingresado');
+        authCustomToken(req, res, next, user.uid);
+
+        //Authentication with Session Persistence / Autenticación con Persistencia de Sesión
+        auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => { 
+            console.log('Persisted / Persistido');  
         })
-        .catch(err => {
-            obj = {
-                status: 400,
-                message: 'User does not exist / El usuario no existe'
-            }
-            res.status(400).send(obj)
-        })  
+        
     })
+    .catch(err => {
+        obj = {
+            status: 400,
+            message: 'User does not exist / El usuario no existe'
+        }
+        res.status(400).send(obj)
+    })  
 }
 
 authCustomToken = (req, res, next, uid) => {
@@ -93,27 +78,6 @@ authCustomToken = (req, res, next, uid) => {
     });
 }
 
-getUser = (req, res, next) => {
-    let encryptedPass = encrypt(req.body.password)
-     //DB
-     let userRef = db.collection('user')
-     let queryUser = userRef.where('email', '==', req.body.email).where('password', '==', encryptedPass).get()
-     .then(snapshot => {
-        let docArray = [];
-        snapshot.forEach(doc => {
-            obj = {
-                id: doc.id,
-                data: doc.data()
-            }
-            docArray.push(obj);
-        })
-        res.json(docArray); 
-        return docArray;
-     })
-     .catch(err => {
-        console.log('Error getting user data / Error obteniendo datos del usuario', err);
-     });
-}
 
 logout = (req, res, next) => {
     auth.signOut().then(response => {
@@ -123,27 +87,116 @@ logout = (req, res, next) => {
     });
 }
 
-getById = (req, res, next) => {
-    let userRef = db.collection('user').doc(req.body.id);
-    let getByIdQuery = userRef
-    .onSnapshot(doc => {
+verifyEmail = (req, res, next) => {
+    const user = auth.currentUser;
+    user.sendEmailVerification().then(function() {
+        console.log('Verification Email sent / Email de verificación enviado');
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+
+recoverPass = (req, res, next) => {
+    
+    auth.sendPasswordResetEmail(req.body.email).then(function() {
         obj = {
-            id: doc.id,
-            data: doc.data()
+            status: 200,
+            message: 'Email with link for recover password was sent / Se envió un link para recuperar contraseña'
         }
-        res.json(obj);
-    }, err => {
-        console.log(`Encountered error / Error encontrado: ${err}`);
-    })
-    return getByIdQuery;    
+        res.status(200).send(obj);
+        
+      }).catch(function(error) {
+        obj = {
+            status: 400,
+            message: 'Error, cannot send link / Error, no se pudo enviar un link'
+        }
+        res.status(400).send(obj); 
+        console.log(error);
+      });
+}
+
+getUser = (req, res, next) => {
+    const user = auth.currentUser;
+    let name, email, photoUrl, uid, emailVerified;
+
+    if (user != null) {
+        let userData = {
+            name:user.displayName,
+            email:user.email,
+            photoUrl:user.photoURL,
+            emailVerified:user.emailVerified,
+            uid :user.uid 
+        }
+        obj = {
+            status: 200,
+            data: userData
+        }
+        res.status(200).send(obj);
+    }
+}
+
+updateUser = (req, res, next) => {
+    const user = auth.currentUser;
+    let encryptedPass = encrypt(req.body.password);
+
+    user.updatePassword(encryptedPass).then(function() {
+        console.log('Password updated / Contraseña actualizada');
+
+        user.updateEmail(req.body.email).then(function() {
+            
+            obj = {
+                status: 200,
+                message: 'Password & Email updated / Correo y Contraseña actualizados'
+            }
+            res.status(200).send(obj); 
+
+        }).catch(function(error) {
+            obj = {
+                status: 400,
+                message: 'Error, cannot update email / Error, no se pudo actualizar el email'
+            }
+            res.status(400).send(obj); 
+            console.log(error);
+        });
+
+    }).catch(function(error) {
+        obj = {
+            status: 400,
+            message: 'Error, cannot update password / Error, no se pudo actualizar la contraseña'
+        }
+        res.status(400).send(obj); 
+        console.log(error);
+    });
+
+}
+
+deleteUser = (req, res, next)  => {
+    const user = auth.currentUser;
+
+    user.delete().then(function() {
+        obj = {
+            status: 200,
+            message: 'User deleted / Usuario borrado'
+        }
+        res.status(200).send(obj); 
+    }).catch(function(error) {
+        obj = {
+            status: 400,
+            message: 'Error, cannot delete user / Error, no se pudo borrar el usuario'
+        }
+        res.status(400).send(obj); 
+        console.log(error);
+    });
 }
 
 
 module.exports = {
     signup: signup,
     login: login,
-    getUser: getUser, 
     logout: logout,
-    getById: getById
-    // verifyEmail: verifyEmail (Coming soon)
+    verifyEmail: verifyEmail,
+    recoverPass: recoverPass,
+    getUser: getUser,
+    updateUser: updateUser,
+    deleteUser: deleteUser
 }
