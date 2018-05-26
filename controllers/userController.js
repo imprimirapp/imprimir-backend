@@ -137,16 +137,28 @@ getUser = (req, res, next) => {
 
 updateUser = (req, res, next) => {
     const user = auth.currentUser;
-    let encryptedPass = encrypt(req.body.password);
+    let updateQuery = req.body;
 
-    user.updatePassword(encryptedPass).then(function() {
-        console.log('Password updated / Contraseña actualizada');
+    console.log(updateQuery.password);
 
-        user.updateEmail(req.body.email).then(function() {
-            
+    if(updateQuery.password){
+        let encryptedPass = encrypt(updateQuery.password);
+        user.updatePassword(encryptedPass).then(function() {
+            console.log('Password updated / Contraseña actualizada');
+        }).catch(function(error) {
+            obj = {
+                status: 400,
+                message: 'Error, cannot update password / Error, no se pudo actualizar la contraseña'
+            }
+            res.status(400).send(obj); 
+            console.log(error);
+        });
+    } else if (updateQuery.email) {
+        user.updateEmail(updateQuery.email).then(function() {
+                
             obj = {
                 status: 200,
-                message: 'Password & Email updated / Correo y Contraseña actualizados'
+                message: 'Email updated / Correo actualizados'
             }
             res.status(200).send(obj); 
 
@@ -158,15 +170,7 @@ updateUser = (req, res, next) => {
             res.status(400).send(obj); 
             console.log(error);
         });
-
-    }).catch(function(error) {
-        obj = {
-            status: 400,
-            message: 'Error, cannot update password / Error, no se pudo actualizar la contraseña'
-        }
-        res.status(400).send(obj); 
-        console.log(error);
-    });
+    } 
 
 }
 
