@@ -16,7 +16,7 @@ Actualmente se encuentra en fase de desarrollo. Imprimir.co no se hará responsa
 
 `npm install`
 
-2. Ask for `accountKey.json` file to system admin. Put it in root folder. / Pedir archivo `accountKey.json` al administrador del sistema. Colocar en directorio raíz.
+2. Ask for `firebase.json` file to system admin. Put it in root folder. / Pedir archivo `firebase.json` al administrador del sistema. Colocar en directorio raíz.
 
 
 3. Init server / Inicializar servidor 
