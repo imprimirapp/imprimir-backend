@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const connection = require('../models/connection');
-const auth = connection.auth();
+//const auth = connection.auth();
 const adminAuth = connection.adminAuth();
 const crypto = require('crypto');
 const algorithm = 'aes-256-ctr';

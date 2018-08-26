@@ -4,7 +4,7 @@ const db = connection.db();
 
 // GETALL
 getAll = (req, res, next) => {
-    let empresaRef = db.collection('empresa');
+    let empresaRef = db.collection('company');
     let getAllQuery = empresaRef.get()
         .then(snapshot => {
             let docArray = [];
@@ -16,9 +16,10 @@ getAll = (req, res, next) => {
                 docArray.push(obj);
             });
             res.json(docArray);
+            next();
         })
         .catch(err => {
-            console.log('Error getting business / Error obteniendo empresas', err);
+            console.log('Error getting business', err);
         });
     return getAllQuery;    
 }

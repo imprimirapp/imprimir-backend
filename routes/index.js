@@ -1,14 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//Controllers
-const empresaController = require('../controllers/empresaController');
-const agenteController = require('../controllers/agenteController');
-const freelanceController = require('../controllers/freelanceController');
-const membresiaController = require('../controllers/membresiaController');
-const plataformaController = require('../controllers/plataformaController');
-const productoController = require('../controllers/productoController');
-const userController = require('../controllers/userController');
-const storageController = require('../controllers/storageController');
 
 
 //Home 
@@ -16,21 +7,25 @@ router.get('/', function(req, res, next) {
   res.render('index.html', { title: 'Express' });
 });
 
-//Endpoints 
+//Controllers
+const companyController = require('../controllers/companyController');
 
-//Empresa
-router.get("/empresa/getAll",empresaController.getAll);
-router.post("/empresa/getById",empresaController.getById);
-router.post("/empresa/post",empresaController.post);
-router.put("/empresa/updateById",empresaController.updateById);
-router.delete("/empresa/deleteById",empresaController.deleteById);
+//Company
+router.get("/company/getAll", companyController.getAllCompanies);
+router.get("/company/getByID/:id", companyController.getCompanyByID);
+router.post("/company/post", companyController.postCompany);
+router.put("/company/put/:id", companyController.updateCompany);
+router.delete("/company/delete/:id", companyController.deleteCompany);
 
-//Agente
-router.get("/agente/getAll",agenteController.getAll);
-router.post("/agente/getById",agenteController.getById);
-router.post("/agente/post",agenteController.post);
-router.put("/agente/updateById",agenteController.updateById);
-router.delete("/agente/deleteById",agenteController.deleteById);
+
+/*
+const freelanceController = require('../controllers/freelanceController');
+const membresiaController = require('../controllers/membresiaController');
+const plataformaController = require('../controllers/plataformaController');
+const productoController = require('../controllers/productoController');
+const userController = require('../controllers/userController');
+const storageController = require('../controllers/storageController');
+
 
 //Freelance
 router.get("/freelance/getAll",freelanceController.getAll);
@@ -72,6 +67,6 @@ router.delete("/user/deleteUser", userController.deleteUser);
 //Storage
 router.post("/storage/uploadFile", storageController.uploadFile);
 router.post("/storage/downloadFile", storageController.downloadFile);
-router.delete("/storage/deleteFile", storageController.deleteFile);
+router.delete("/storage/deleteFile", storageController.deleteFile);*/
 
 module.exports = router;

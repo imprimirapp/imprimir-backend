@@ -1,6 +1,6 @@
-//Environment Variables Load / Carga de Variables de Entorno
-const dotenv = require('dotenv');
-dotenv.load();
+//Environment Variables Load
+/*const dotenv = require('dotenv');
+dotenv.load();*/
 
 module.exports = {
     port: 3000

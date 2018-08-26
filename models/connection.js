@@ -1,9 +1,8 @@
 const firebase = require("firebase");
 const admin = require("firebase-admin");
-const config  = require('../config/config');
 const serviceAccount = require('../firebase.json');
 
-//Services:
+//Services
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "imprimir-backend.appspot.com"
@@ -11,23 +10,22 @@ admin.initializeApp({
 
 firebase.initializeApp(serviceAccount);
 
-
-//Database / Base de datos
+//Database 
 db = () => {
   return admin.firestore();
 }
 
-//Authentication / Autenticación
-auth = () => {
+//Authentication 
+/*auth = () => {
   return firebase.auth();
-}
+}*/
 
-//Admin Auth / Autenticación Admin
+//Admin Auth 
 adminAuth = () => {
   return admin.auth();
 }
 
-//Storage / Almacenamiento
+//Storage 
 storage = () => {
   return admin.storage();
 }
@@ -35,7 +33,7 @@ storage = () => {
 
 module.exports = {
   db: db,
-  auth: auth,
+  //auth: auth,
   adminAuth: adminAuth,
   storage: storage
 }

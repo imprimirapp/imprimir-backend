@@ -1,4 +1,4 @@
-// Dependencies / Dependencias
+// Dependencies 
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -11,23 +11,23 @@ const cons = require('consolidate');
 var routes = require('./routes/index.js');
 const config  = require('./config/config');
 
-//Port / Puerto:
+//Port
 const server_port = config.port;
 
-//App / Aplicación
+//App 
 const app = express();
 
-//Define static directories / Definir carpetas estáticas a usar:
+//Define static directories
 app.use(express.static(__dirname + '../public'));
 app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/bower_components'));
 
-//Define view engine / Definir motor de vistas
+//Define view engine 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', cons.swig)
 app.set('view engine', 'html');
 
-//Define middlewares / Definir middlewares:
+//Define middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -42,18 +42,18 @@ app.use(function(req, res, next) {
  next();
 });
 
-//Routes / Rutas
+//Routes
 app.use('/', routes);
 
-//Init app / Inicializar la aplicación:
+//Init app 
 init();
 
-//Define init / Definir Inicialización:
+//Define init 
 function init() {
   app.listen(server_port, function() {
-    console.log('La aplicación está corriendo en localhost:' + server_port);
+    console.log('APP:' + server_port);
   });
 }
 
-//Export module / Exportar módulo
+//Export module 
 module.exports = app;
