@@ -5,7 +5,7 @@ const serviceAccount = require('../firebase.json');
 //Services
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "imprimir-backend.appspot.com"
+  storageBucket: "imprimir-backend-v2.appspot.com"
 });
 
 firebase.initializeApp(serviceAccount);
@@ -16,9 +16,9 @@ db = () => {
 }
 
 //Authentication 
-/*auth = () => {
+auth = () => {
   return firebase.auth();
-}*/
+}
 
 //Admin Auth 
 adminAuth = () => {
@@ -33,7 +33,7 @@ storage = () => {
 
 module.exports = {
   db: db,
-  //auth: auth,
+  auth: auth,
   adminAuth: adminAuth,
   storage: storage
 }

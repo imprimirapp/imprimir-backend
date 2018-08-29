@@ -8,7 +8,20 @@ router.get('/', function(req, res, next) {
 });
 
 //Controllers
+const authController = require('../controllers/authController');
 const companyController = require('../controllers/companyController');
+const companyTypeController = require('../controllers/companyTypeController');
+const designController = require('../controllers/designController');
+
+//Auth
+router.post("/auth/signup", authController.signupUser, authController.verifyUser);
+router.post("/auth/login", authController.loginUser);
+router.get("/auth/logout", authController.logoutUser);
+router.post("/auth/recoverPass", authController.recoverPassUser);
+router.get("/auth/getUser", authController.getCurrentUser);
+router.patch("/auth/update", authController.patchUser);
+router.delete("/auth/delete", authController.deleteCurrentUser);
+
 
 //Company
 router.get("/company/getAll", companyController.getAllCompanies);
@@ -17,54 +30,22 @@ router.post("/company/post", companyController.postCompany);
 router.put("/company/put/:id", companyController.updateCompany);
 router.delete("/company/delete/:id", companyController.deleteCompany);
 
+//Company Type
+router.get("/company_type/getAll", companyTypeController.getAllCompanyTypes);
+router.get("/company_type/getByID/:id", companyTypeController.getCompanyTypeByID);
+router.post("/company_type/post", companyTypeController.postCompanyType);
+router.put("/company_type/put/:id", companyTypeController.updateCompanyType);
+router.delete("/company_type/delete/:id", companyTypeController.deleteCompanyType);
 
-/*
-const freelanceController = require('../controllers/freelanceController');
-const membresiaController = require('../controllers/membresiaController');
-const plataformaController = require('../controllers/plataformaController');
-const productoController = require('../controllers/productoController');
-const userController = require('../controllers/userController');
-const storageController = require('../controllers/storageController');
+//Design
+router.get("/design/getAll", designController.getAllDesigns);
+router.get("/design/getByID/:id", designController.getDesignByID);
+router.post("/design/post", designController.postDesign);
+router.put("/design/put/:id", designController.updateDesign);
+router.delete("/design/delete/:id", designController.deleteDesign);
 
 
-//Freelance
-router.get("/freelance/getAll",freelanceController.getAll);
-router.post("/freelance/getById",freelanceController.getById);
-router.post("/freelance/post",freelanceController.post);
-router.put("/freelance/updateById",freelanceController.updateById);
-router.delete("/freelance/deleteById",freelanceController.deleteById);
-
-//Membresía
-router.get("/membresia/getAll",membresiaController.getAll);
-router.post("/membresia/getById",membresiaController.getById);
-router.post("/membresia/post",membresiaController.post);
-router.put("/membresia/updateById",membresiaController.updateById);
-router.delete("/membresia/deleteById",membresiaController.deleteById);
-
-//Plataforma
-router.get("/plataforma/getAll",plataformaController.getAll);
-router.post("/plataforma/getById",plataformaController.getById);
-router.post("/plataforma/post",plataformaController.post);
-router.put("/plataforma/updateById",plataformaController.updateById);
-router.delete("/plataforma/deleteById",plataformaController.deleteById);
-
-//Producto
-router.get("/producto/getAll",productoController.getAll);
-router.post("/producto/getById",productoController.getById);
-router.post("/producto/post",productoController.post);
-router.put("/producto/updateById",productoController.updateById);
-router.delete("/producto/deleteById",productoController.deleteById);
-
-//User
-router.get("/user/getUser", userController.getUser);
-router.post("/user/signup", userController.signup, userController.verifyEmail);
-router.post("/user/login", userController.login, userController.getUser);
-router.post("/user/logout", userController.logout);
-router.post("/user/recoverPass", userController.recoverPass);
-router.put("/user/updateUser", userController.updateUser);
-router.delete("/user/deleteUser", userController.deleteUser);
-
-//Storage
+/*//Storage
 router.post("/storage/uploadFile", storageController.uploadFile);
 router.post("/storage/downloadFile", storageController.downloadFile);
 router.delete("/storage/deleteFile", storageController.deleteFile);*/

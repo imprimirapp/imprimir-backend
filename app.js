@@ -11,6 +11,9 @@ const cons = require('consolidate');
 var routes = require('./routes/index.js');
 const config  = require('./config/config');
 
+const connection = require('./models/connection');
+const db = connection.db();
+
 //Port
 const server_port = config.port;
 
@@ -51,7 +54,8 @@ init();
 //Define init 
 function init() {
   app.listen(server_port, function() {
-    console.log('APP:' + server_port);
+    console.log('APP: localhost:' + server_port);
+    console.log('DB:', db.projectId);
   });
 }
 
