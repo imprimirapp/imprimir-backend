@@ -1,0 +1,41 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "engines": {
+    "node": "8"
+  },
+  "scripts": {
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions,hosting",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "firebase-functions": "2.0.0",
+    "@google-cloud/storage": "^1.6.0",
+    "body-parser": "~1.18.2",
+    "browser-sync": "^2.24.6",
+    "consolidate": "^0.15.0",
+    "cookie-parser": "~1.3.3",
+    "debug": "~2.1.1",
+    "dotenv": "^1.2.0",
+    "express": "^4.11.2",
+    "express-myconnection": "^1.0.4",
+    "firebase": "^4.10.1",
+    "firebase-admin": "5.13.0",
+    "googleapis": "^31.0.2",
+    "gulp-jshint": "^2.0.1",
+    "gulp-nodemon": "^2.1.0",
+    "http": "~0.0.0",
+    "jshint": "^2.9.6",
+    "jsonwebtoken": "^8.2.1",
+    "logfmt": "^1.2.1",
+    "morgan": "^1.5.3",
+    "request": "^2.0.5",
+    "serve-favicon": "^2.3.0",
+    "swig": "^1.4.2"
+  },
+  "private": true
+}

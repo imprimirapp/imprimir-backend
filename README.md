@@ -18,11 +18,22 @@ Actualmente se encuentra en fase de desarrollo. Imprimir.co no se hará responsa
 
 2. Ask for `firebase.json` file to system admin. Put it in root folder. / Pedir archivo `firebase.json` al administrador del sistema. Colocar en directorio raíz.
 
+3. Move to folder `functions` and install dependencies / Moverse a la carpeta `functions` e instalar dependencias
 
-3. Init server / Inicializar servidor 
+`cd functions` 
+`npm install`
 
-`npm start` or / o `nodemon app.js` 
+
+4. Move to root folder, Init server / Moverse a carpeta raíz e Inicializar servidor 
+
+`cd ..`
+`firebase serve --only functions` or / o  `npm start` or / o `nodemon`
 
 > Note: In order to execute `nodemon app.js` you need have installed Nodemon globally: `npm install -g nodemon`
 
 > Nota: Para ejecutar `nodemon app.js` necesita tener instalado Nodemon globalmente: `npm install -g nodemon`
+
+5. If you want deploy functions in hosting / Si quiere hacer deploy de las funciones en el hosting
+
+
+`firebase deploy --only functions,hosting`

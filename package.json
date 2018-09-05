@@ -7,9 +7,8 @@
     },
     "private": true,
     "description": "Backend system for Imprimir.co",
-    "main": "app.js",
     "scripts": {
-        "start": "node app.js",
+        "start": "firebase serve --only functions",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
