@@ -29,11 +29,10 @@ Actualmente se encuentra en fase de desarrollo. Imprimir.co no se hará responsa
 `cd ..`
 `firebase serve --only functions` or / o  `npm start` or / o `nodemon`
 
-> Note: In order to execute `nodemon app.js` you need have installed Nodemon globally: `npm install -g nodemon`
+> Note: In order to execute `nodemon` you need have installed Nodemon globally: `npm install -g nodemon`
 
-> Nota: Para ejecutar `nodemon app.js` necesita tener instalado Nodemon globalmente: `npm install -g nodemon`
+> Nota: Para ejecutar `nodemon` necesita tener instalado Nodemon globalmente: `npm install -g nodemon`
 
 5. If you want deploy functions in hosting / Si quiere hacer deploy de las funciones en el hosting
-
 
 `firebase deploy --only functions,hosting`
