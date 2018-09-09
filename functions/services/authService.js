@@ -15,7 +15,7 @@ encrypt = (pass) =>{
 
 
 signup = (body) => {
-    return new Promise ((resolve, reject) => {
+    return new Promise ((resolve) => {
         let encryptedPass = encrypt(body.password);
         let objUser = {
             username: body.username,
@@ -24,28 +24,33 @@ signup = (body) => {
         }
         //AUTH
         auth.createUserWithEmailAndPassword(objUser.email, encryptedPass).then(user => {   
-    
-            obj = {
-                data: user,
-                status: 200,
-                message: 'User created succesfully / Usuario creado exitosamente'
-            }
-    
-            resolve(obj);
+
+            user.updateProfile({
+                displayName: objUser.username
+            }).then(d => {
+                obj = {
+                    data: d,
+                    status: 200,
+                    message: 'User created succesfully / Usuario creado exitosamente'
+                }
+        
+                resolve(obj);
+            })
           
         }).catch(err => {
             obj = {
+                data: err,
                 status: 400,
                 message: 'User exists already / El usuario ya existe'
             }
-            reject(obj);
+            resolve(obj);
         });
     });
 }
 
 
 login = (body) => {
-    return new Promise ((resolve, reject) => {
+    return new Promise ((resolve) => {
         let encryptedPass = encrypt(body.password);
         auth.signInWithEmailAndPassword(body.email, encryptedPass).then(user => {
             
@@ -69,7 +74,7 @@ login = (body) => {
                 status: 400,
                 message: 'User does not exist / El usuario no existe'
             }
-            reject(obj);
+            resolve(obj);
         })
     });
 }
@@ -117,7 +122,7 @@ verifyEmail = () => {
 }
 
 recoverPass = (body) => {
-    return new Promise ((resolve, reject) => { 
+    return new Promise ((resolve) => { 
         auth.sendPasswordResetEmail(body.email).then(function() {
             obj = {
                 status: 200,
@@ -125,18 +130,18 @@ recoverPass = (body) => {
             }
             resolve(obj)
         }).catch(function(error) {
-        obj = {
-            data: error,
-            status: 400,
-            message: 'Error, cannot send link / Error, no se pudo enviar un link'
-        }
-        reject(obj);
+            obj = {
+                data: error,
+                status: 400,
+                message: 'Error, cannot send link / Error, no se pudo enviar un link'
+            }
+            resolve(obj);
         });
     });
 }
 
 getUser = () => {
-    return new Promise ((resolve, reject) => { 
+    return new Promise ((resolve) => { 
         const user = auth.currentUser;
 
             if (user != null) {
@@ -166,7 +171,7 @@ getUser = () => {
 updateUser = (updateQuery) => {
     console.log(updateQuery);
 
-    return new Promise ((resolve, reject) => { 
+    return new Promise ((resolve) => { 
 
         const user = auth.currentUser;
 
@@ -184,7 +189,7 @@ updateUser = (updateQuery) => {
                     status: 400,
                     message: 'Error, cannot update password / Error, no se pudo actualizar la contraseña'
                 }
-                reject(obj)
+                resolve(obj)
             });
         } else if (updateQuery.email && user) {
             user.updateEmail(updateQuery.email).then(function() {
@@ -201,7 +206,7 @@ updateUser = (updateQuery) => {
                     status: 400,
                     message: 'Error, cannot update email / Error, no se pudo actualizar el email'
                 }
-                reject(obj);
+                resolve(obj);
             });
         } else {
             objError = {
@@ -214,7 +219,7 @@ updateUser = (updateQuery) => {
 }
 
 deleteUser = ()  => {
-    return new Promise ((resolve, reject) => { 
+    return new Promise ((resolve) => { 
         const user = auth.currentUser;
 
         user.delete().then(function() {
@@ -229,7 +234,7 @@ deleteUser = ()  => {
                 status: 400,
                 message: 'Error, cannot delete user / Error, no se pudo borrar el usuario'
             }
-            reject(obj)
+            resolve(obj)
         });
     });
 }
