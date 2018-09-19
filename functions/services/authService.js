@@ -4,7 +4,7 @@ const adminAuth = connection.adminAuth();
 const crypto = require('crypto');
 const algorithm = 'aes-256-ctr';
 const password = 'imprimir';
-const firebase = require("firebase");
+
 
 encrypt = (pass) =>{
     let cipher = crypto.createCipher(algorithm,password)
@@ -54,18 +54,18 @@ login = (body) => {
         let encryptedPass = encrypt(body.password);
         auth.signInWithEmailAndPassword(body.email, encryptedPass).then(user => {
             
-            console.log('Logged / Ingresado');
-            authCustomToken(user.uid);
+           adminAuth.createCustomToken(user.uid).then(customToken => {
+            console.log('CUSTOM TOKEN', customToken);
+            let authObj = {
+                token: customToken,
+                data: user,
+                status: 200,
+                message: 'Logged / Ingresado'
+            } 
+
+            resolve(authObj);
     
-            //Authentication with Session Persistence / Autenticación con Persistencia de Sesión
-            auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => { 
-                let authObj = {
-                    data: user,
-                    status: 200,
-                    message: 'Persisted / Persistido'
-                } 
-                resolve(authObj);
-            })
+           });
             
         })
         .catch(err => {
@@ -77,17 +77,6 @@ login = (body) => {
             resolve(obj);
         })
     });
-}
-
-authCustomToken = (uid) => {
-         //Authentication with Custom Token / Autenticación con Token Personalizado
-        adminAuth.createCustomToken(uid).then(customToken => {
-            auth.signInWithCustomToken(customToken).then(() =>{
-                console.log('Auth with Custom Token / Autenticado con Token Personalizado');
-            })
-        }).catch(error =>{
-            console.log('Error authenticating / Error autenticando');
-        });
 }
 
 
