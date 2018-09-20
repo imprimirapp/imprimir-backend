@@ -16,14 +16,18 @@ const freelancerController = require('../controllers/freelancerController');
 const membershipController = require('../controllers/membershipController');
 const membershipTypeController = require('../controllers/membershipTypeController');
 const packController = require('../controllers/packController');
+const packStorageController = require('../controllers/packStorageController');
 const packTypeController = require('../controllers/packTypeController');
 const paymentController = require('../controllers/paymentController');
 const paymentMethodController = require('../controllers/paymentMethodController');
 const productController = require('../controllers/productController');
+const productStorageController = require('../controllers/productStorageController');
 const productTypeController = require('../controllers/productTypeController');
+const profilePhotoStorageController = require('../controllers/profilePhotoStorageController');
 const providerController = require('../controllers/providerController');
 const userController = require('../controllers/userController');
 const userTypeController = require('../controllers/userTypeController');
+
 
 //Auth
 router.post("/auth/signup", authController.signupUser, authController.verifyUser);
@@ -83,6 +87,11 @@ router.post("/pack/post", packController.postPack);
 router.put("/pack/put/:id", packController.updatePack);
 router.delete("/pack/delete/:id", packController.deletePack);
 
+//Pack Storage
+router.post("/packStorage/uploadPack", packStorageController.uploadPack);
+router.post("/packStorage/downloadPack", packStorageController.downloadPack);
+router.delete("/packStorage/deletePack", packStorageController.deletePack);
+
 //Pack Type
 router.get("/packType/getAll", packTypeController.getAllPackTypes);
 router.get("/packType/getByID/:id", packTypeController.getPackTypeByID);
@@ -111,12 +120,22 @@ router.post("/product/post", productController.postProduct);
 router.put("/product/put/:id", productController.updateProduct);
 router.delete("/product/delete/:id", productController.deleteProduct);
 
+//Product Storage
+router.post("/productStorage/uploadProduct", productStorageController.uploadProduct);
+router.post("/productStorage/downloadProduct", productStorageController.downloadProduct);
+router.delete("/productStorage/deleteProduct", productStorageController.deleteProduct);
+
 //Product Type
 router.get("/productType/getAll", productTypeController.getAllProductTypes);
 router.get("/productType/getByID/:id", productTypeController.getProductTypeByID);
 router.post("/productType/post", productTypeController.postProductType);
 router.put("/productType/put/:id", productTypeController.updateProductType);
 router.delete("/productType/delete/:id", productTypeController.deleteProductType);
+
+//Profile Photo Storage
+router.post("/profilePhotoStorage/uploadProfilePhoto", profilePhotoStorageController.uploadProfilePhoto);
+router.post("/profilePhotoStorage/downloadProfilePhoto", profilePhotoStorageController.downloadProfilePhoto);
+router.delete("/profilePhotoStorage/deleteProfilePhoto", profilePhotoStorageController.deleteProfilePhoto);
 
 //Provider
 router.get("/provider/getAll", providerController.getAllProviders);
@@ -139,9 +158,5 @@ router.post("/userType/post", userTypeController.postUserType);
 router.put("/userType/put/:id", userTypeController.updateUserType);
 router.delete("/userType/delete/:id", userTypeController.deleteUserType);
 
-/*//Storage
-router.post("/storage/uploadFile", storageController.uploadFile);
-router.post("/storage/downloadFile", storageController.downloadFile);
-router.delete("/storage/deleteFile", storageController.deleteFile);*/
 
 module.exports = router;

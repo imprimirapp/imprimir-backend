@@ -55,7 +55,9 @@ post = (body) => {
             official_id: body.official_id,
             payment_method_id: body.payment_method_id,
             phone: body.phone,
+            points: body.points,
             province_state: body.province_state,
+            score: body.score,
             user_type_id: body.user_type_id
         }
         let userRef = db.collection('user')

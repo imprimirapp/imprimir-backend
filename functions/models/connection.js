@@ -5,7 +5,7 @@ const serviceAccount = require('../firebase.json');
 //Services
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "imprimir-backend-v2.appspot.com"
+  storageBucket: "staging.imprimir-backend-v2.appspot.com"
 });
 
 firebase.initializeApp(serviceAccount);

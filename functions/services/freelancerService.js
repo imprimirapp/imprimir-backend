@@ -51,6 +51,7 @@ post = (body) => {
             membership_id: body.membership_id,
             membership_payment_id: body.membership_payment_id,
             payment_method_id: body.payment_method_id,
+            points: body.points,
             score: body.score
         }
         let freelancerRef = db.collection('freelancer')

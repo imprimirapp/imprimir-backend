@@ -53,6 +53,7 @@ post = (body) => {
             name: body.name,
             official_id: body.official_id,
             phone: body.phone,
+            points: body.points,
             province_state: body.province_state,
             score: body.score,
             website: body.website
